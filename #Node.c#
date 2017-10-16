@@ -1,0 +1,10 @@
+
+
+struct Node{
+  int data;
+ struct  Node* left;
+struct   Node right;
+};
+
+struct Node root;//store address of root node
+  
