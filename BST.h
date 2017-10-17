@@ -5,14 +5,11 @@
 
 
 /* a linked-list item */
-typedef struct LLItem_s {
-  struct  LLItem_s *root; 
+typedef struct BST {
+  struct BST *right;
+  struct BST *left;
   char *str;
-} Node;
-
-/* a list of LLItems */
-typedef struct {
-  Node *right, *left;
+  
 } BST;
 
 extern int llDoCheck;		/* set true for paranoid consistency checking */
@@ -20,14 +17,11 @@ extern int llDoCheck;		/* set true for paranoid consistency checking */
 /* create a new list */
 BST *llAlloc();
 
-/* free memory associated with a list, discarding all items it contains */
-void llFree(BST *lp);
-
 /* append a copy of str to end of list */
-void llPut(BST *lp, char *s);
+void insert(BST *lp, char *s);
 
 /* print list membership.  Prints default mesage if message is NULL */
-void llPrint(BST *lp, char *msg);
+void print(BST *lp, char *msg);
 
 #endif	/* included */
 
