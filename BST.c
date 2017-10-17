@@ -1,31 +1,25 @@
-
+ 
 
 #include <stdio.h>		/* for puts,  */
 #include <stdlib.h> 		/* for malloc */
 #include <assert.h>		/* for assert */
-#include "BST.h"		
-
-int llDoCheck = 1;		/* set true for paranoid consistency checking */
-
-#define doCheck(_lp) (llDoCheck && llCheck(_lp))
+#include "BST.h"
+#include <string.h>
 
 /* create a new list */
 BST *llAlloc()
 {
   BST *lp = (BST *)malloc(sizeof(BST));
-  lp->right = lp->left = 0;
-  doCheck(lp);
   return lp;
 }
 
 /* append a copy of str to end of list */
-void llPut(BST *lp, char *s)
+void insert(BST *lp, char *s)
 {
   int len;
   char *scopy;
-  LLItem *i;
+  BST *i;
 
-  doCheck(lp);
   /* w = freshly allocated copy of putWord */
   for (len = 0; s[len]; len++) /* compute length */
     ;
@@ -36,39 +30,38 @@ void llPut(BST *lp, char *s)
 
 
   /* i = new item containing s */
-  i = (LLItem *)malloc(sizeof(LLItem));
+  i = (BST *)malloc(sizeof(BST));
   i->str = scopy;
-  i->next = 0;
-
-
-  /* append to end of list */
-  if (lp->left||lp->right) {			/* list not empty */
-    if(lp->(int)str>(int)s)
-      lp->right = llPut(lp->right, data);
-    else
-      lp->left = llPut(lp->left, data);
-  }
-  else {			/* list empty */
-    lp->right = i;
-  }
+  i->right = 0;
+  i->left = 0;
 
   /* new item is last on list */
-  lp->last = i;
-  doCheck(lp);
+  if(lp==NULL)
+    lp = i;
+  else{
+    if(strcmp(lp->str,s)>0)
+     insert(lp->left, s);
+    else
+     insert(lp->right, s);
+  }
 }
 
 /* print list membership.  Prints default mesage if message is NULL */
-void llPrint(BST *lp, char *msg)
+void print(BST *lp, char *msg)
 {
-  LLItem *ip;
-  int count = 1;
-  doCheck(lp);
-  puts(msg ? msg :" List contents:");
-  for (ip = lp->first; ip; ip = ip->next) {
-    printf("  %d: <%s>\n", count, ip->str);
-    count++;
+  if(lp!=NULL){
+    print(lp->left, msg);
+    printf("%s\n",lp->str);
+    print(lp->right,msg);
   }
 }
 
+void remove(BST *lp, char *key)
+{
+  if(lp==NULL)
+    return lp;
+  if(strcmp(lp->str, key)>0)
+    deleteNode(root->left, key);
 
-////Needs remove
+
+  ////Needs remove
