@@ -61,7 +61,11 @@ void remove(BST *lp, char *key)
   if(lp==NULL)
     return lp;
   if(strcmp(lp->str, key)>0)
-    deleteNode(root->left, key);
+    remove(lp->left, key);
+  else if ((strcmp(lp->str, key)<0)
+    remove(lp->right, key);
+	   else{
+	     
 
 
   ////Needs remove
