@@ -7,14 +7,16 @@
 #include <string.h>
 
 /* create a new list */
-BST *llAlloc()
+BST *llAlloc(char *s)
 {
   BST *lp = (BST *)malloc(sizeof(BST));
+  lp->str = s;
+  lp->right = lp->left = NULL;
   return lp;
 }
 
 /* append a copy of str to end of list */
-void insert(BST *lp, char *s)
+BST *insertT(BST *lp, char *s)
 {
   int len;
   char *scopy;
@@ -36,36 +38,64 @@ void insert(BST *lp, char *s)
   i->left = 0;
 
   /* new item is last on list */
-  if(lp==NULL)
+  if(lp==NULL){
     lp = i;
+  }
   else{
     if(strcmp(lp->str,s)>0)
-     insert(lp->left, s);
+    lp->left = insertT(lp->left, s);
     else
-     insert(lp->right, s);
+    lp->right =  insertT(lp->right, s);
+
   }
+  return lp;
 }
 
 /* print list membership.  Prints default mesage if message is NULL */
-void print(BST *lp, char *msg)
+void printT(BST *lp)
 {
   if(lp!=NULL){
-    print(lp->left, msg);
+    printT(lp->left);
     printf("%s\n",lp->str);
-    print(lp->right,msg);
+    printT(lp->right);
   }
 }
 
-void remove(BST *lp, char *key)
-{
+
+BST *minValueT(BST *lp){
+  BST *current = (BST *)malloc(sizeof(BST));
+  *current = *lp;
+
+  while(lp->left!=NULL)
+   current = current->left;
+  return current;
+} 
+
+BST *removeT(BST *lp, char *key){
   if(lp==NULL)
     return lp;
-  if(strcmp(lp->str, key)>0)
-    remove(lp->left, key);
-  else if ((strcmp(lp->str, key)<0)
-    remove(lp->right, key);
-	   else{
-	     
+  if(strcmp(lp->str, key)>0){
+    lp->left=removeT(lp->left, key);
+  }
+  else if (strcmp(lp->str, key)<0){
+    removeT(lp->right, key);
+    }
+else{
+  if(lp->left==NULL){
+    BST *temp = lp-> right;
+    free(lp);
+    return temp;
+  }
+  else if (lp->right == NULL){
+      BST *temp = lp->left;
+      free(lp);
+      return temp;
+  }
+      BST *temp = minValueT(lp->right);
 
+      lp->str = temp->str;
 
-  ////Needs remove
+      lp->right = removeT(lp->right, temp->str);
+ }
+  return lp;
+}

@@ -12,16 +12,19 @@ typedef struct BST {
   
 } BST;
 
-extern int llDoCheck;		/* set true for paranoid consistency checking */
-
 /* create a new list */
-BST *llAlloc();
+BST *llAlloc(char *s);
 
 /* append a copy of str to end of list */
-void insert(BST *lp, char *s);
+BST *insertT(BST *lp, char *s);
 
-/* print list membership.  Prints default mesage if message is NULL */
-void print(BST *lp, char *msg);
+/* print list membership. */
+void printT(BST *lp);
+
+//returns min value
+BST *minValueT(BST *lp);
+
+BST *removeT(BST *lp, char *key);
 
 #endif	/* included */
 

@@ -1,4 +1,10 @@
-all: llDemo
+
+
+
+
+
+
+all: BSTDemo
 
 CFLAGS=-g -O3
 
@@ -6,18 +12,18 @@ CFLAGS=-g -O3
 #   $@ is the production's target
 #   $^ are the production's prerequisites
 
-llDemo: llist.o llDemo.o
+BSTDemo: BST.o BSTDemo.o
 	cc -o $@ $^
 
-llist.o: llist.c llist.h
-	cc -c $(CFLAGS) llist.c
+BST.o: BST.c BST.h
+	cc -c $(CFLAGS) BST.c
 
-llDemo.o: llDemo.c llist.h
-	cc -c $(CFLAGS) llDemo.c
+BSTDemo.o: BSTDemo.c BST.h
+	cc -c $(CFLAGS) BSTDemo.c
 
 clean:
-	rm -f *.o llDemo
+	rm -f *.o BSTDemo
 
-demo: llDemo
-	(echo first; echo "second line"; echo "third and last") | ./llDemo
+demo: BSTDemo
+	(echo first; echo "second line"; echo "third and last") | ./BSTDemo
 

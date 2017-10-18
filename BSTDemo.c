@@ -1,3 +1,5 @@
+
+
 #include <stdio.h>		/* for printf */
 #include <stdlib.h>		/* for free() */
 #include <string.h> 		/* for strlen */
@@ -17,25 +19,28 @@ int gets_n(char *s, int limit)
   }
   return (p - s);		/* #chars read (not including terminator or \n*/
 }
+ 
 
 int main()
 {
   char buf[100];
-  BST *lp = llAlloc();	/* make empty list */
+  BST *lp = llAlloc("");	/* make empty list */
 
-  print(lp, "List contents, prior to reading input:");
-
+  printf("enter names");
   while (gets_n(buf, 100))	/* build list */
-    llPut(lp, buf);
+    insertT(lp, buf);
 
-  llPrint(lp, "List contents, after building list:");
+  printT(lp);
 
-  llMakeEmpty(lp);
 
-  printf("After emptying the list...");
-  llPrint(lp, 0);		/* default message */
+  printf("I wish to remove...");
+  char temp[100];
+  fgets(temp,100,stdin);
 
-  llFree(lp);
+    removeT(lp, temp);
+
+    printT(lp);
+
 
   return 0;
 }
