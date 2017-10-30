@@ -27,7 +27,7 @@ int main()
   BST *root = bstAlloc("");	/* make empty list */
   FILE *f = fopen("file.txt", "w");
 
-  printf("enter names ");
+  printf("enter names \n");
   while (gets_n(buf, 100))/* build list */
     insertT(root, buf);
 
@@ -35,17 +35,11 @@ int main()
   
   printT(root); //Print list
 
-  printf("min value");
-  printf( minValueT(root)->str);
-
-  printf("I wish to remove...");
+  printf("I wish to remove...\n");
   char temp[100];
   fgets(temp,100,stdin);
-
-    removeT(root, temp);
-
-    printT(root);
-
+  removeT(root, temp);
+  printT(root);
 
   return 0;
 }

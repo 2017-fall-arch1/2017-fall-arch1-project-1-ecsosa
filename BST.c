@@ -75,13 +75,9 @@ void WriteFileT(BST *root, FILE *f)
 
 //finds min value
 BST *minValueT(BST *root){
-  if(root == NULL)
-    printf("jajajajaja");
   if (root->left != NULL){
-    printf("nonono");
     return minValueT(root->left);
   }
-  printf(root->str);
   return root;
 } 
 
@@ -93,7 +89,7 @@ BST *removeT(BST *root, char *key){
     root->left=removeT(root->left, key);
   }
   else if (strcmp(root->str, key)>0){
-    removeT(root->right, key);
+    root->right=removeT(root->right, key);
     }
 else{
   if(root->left==NULL){
