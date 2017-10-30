@@ -46,7 +46,7 @@ BST *insertT(BST *root, char *s)
     if(strcmp(root->str,s)>0)
     root->left = insertT(root->left, s);
     else
-    root->right =  insertT(root->right, s);
+    root->right = insertT(root->right, s);
 
   }
   return root;
@@ -75,11 +75,14 @@ void WriteFileT(BST *root, FILE *f)
 
 //finds min value
 BST *minValueT(BST *root){
-  BST *current = root;
-
-  while(root->left!=NULL)
-   current = current->left;
-  return current;
+  if(root == NULL)
+    printf("jajajajaja");
+  if (root->left != NULL){
+    printf("nonono");
+    return minValueT(root->left);
+  }
+  printf(root->str);
+  return root;
 } 
 
 //remove any value
