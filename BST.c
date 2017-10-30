@@ -5,18 +5,19 @@
 #include <assert.h>		/* for assert */
 #include "BST.h"
 #include <string.h>
+#include <fcntl.h>
 
 /* create a new list */
-BST *llAlloc(char *s)
+BST *bstAlloc(char *s)
 {
-  BST *lp = (BST *)malloc(sizeof(BST));
-  lp->str = s;
-  lp->right = lp->left = NULL;
-  return lp;
+  BST *root = (BST *)malloc(sizeof(BST));
+  root->str = s;
+  root->right = root->left = NULL;
+  return root;
 }
 
 /* append a copy of str to end of list */
-BST *insertT(BST *lp, char *s)
+BST *insertT(BST *root, char *s)
 {
   int len;
   char *scopy;
@@ -38,64 +39,73 @@ BST *insertT(BST *lp, char *s)
   i->left = 0;
 
   /* new item is last on list */
-  if(lp==NULL){
-    lp = i;
+  if(root==NULL){
+    root = i;
   }
   else{
-    if(strcmp(lp->str,s)>0)
-    lp->left = insertT(lp->left, s);
+    if(strcmp(root->str,s)>0)
+    root->left = insertT(root->left, s);
     else
-    lp->right =  insertT(lp->right, s);
+    root->right =  insertT(root->right, s);
 
   }
-  return lp;
+  return root;
 }
 
-/* print list membership.  Prints default mesage if message is NULL */
-void printT(BST *lp)
+/* print all memebers of list */
+void printT(BST *root)
 {
-  if(lp!=NULL){
-    printT(lp->left);
-    printf("%s\n",lp->str);
-    printT(lp->right);
+  if(root!=NULL){
+    printT(root->left);
+    printf("%s\n",root->str);
+    printT(root->right);
   }
 }
 
+//Print all elements in list
+void WriteFileT(BST *root, FILE *f)
+{
+  if(root!=NULL){
+    WriteFileT(root->left, f);
+    fprintf(f,"%s\n", root->str);
+    WriteFileT(root->right, f);
+  }
 
-BST *minValueT(BST *lp){
-  BST *current = (BST *)malloc(sizeof(BST));
-  *current = *lp;
+}
 
-  while(lp->left!=NULL)
+//finds min value
+BST *minValueT(BST *root){
+  BST *current = root;
+
+  while(root->left!=NULL)
    current = current->left;
   return current;
 } 
 
-BST *removeT(BST *lp, char *key){
-  if(lp==NULL)
-    return lp;
-  if(strcmp(lp->str, key)>0){
-    lp->left=removeT(lp->left, key);
+//remove any value
+BST *removeT(BST *root, char *key){
+  if(root==NULL)
+    return root;
+  if(strcmp(root->str, key)<0){
+    root->left=removeT(root->left, key);
   }
-  else if (strcmp(lp->str, key)<0){
-    removeT(lp->right, key);
+  else if (strcmp(root->str, key)>0){
+    removeT(root->right, key);
     }
 else{
-  if(lp->left==NULL){
-    BST *temp = lp-> right;
-    free(lp);
+  if(root->left==NULL){
+    BST *temp = root-> right;
+    free(root);
     return temp;
   }
-  else if (lp->right == NULL){
-      BST *temp = lp->left;
-      free(lp);
+  else if (root->right == NULL){
+      BST *temp = root->left;
+      free(root);
       return temp;
   }
-      BST *temp = minValueT(lp->right);
-
-      lp->str = temp->str;
-
-      lp->right = removeT(lp->right, temp->str);
+      BST *temp = minValueT(root->right);
+      root->str = temp->str;
+      root->right = removeT(root->right, temp->str);
  }
-  return lp;
+  return root;
 }

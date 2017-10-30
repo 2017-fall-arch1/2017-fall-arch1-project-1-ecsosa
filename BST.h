@@ -13,18 +13,22 @@ typedef struct BST {
 } BST;
 
 /* create a new list */
-BST *llAlloc(char *s);
+BST *bstAlloc(char *s);
 
 /* append a copy of str to end of list */
-BST *insertT(BST *lp, char *s);
+BST *insertT(BST *root, char *s);
 
-/* print list membership. */
-void printT(BST *lp);
+/* print elements */
+void printT(BST *root);
 
 //returns min value
-BST *minValueT(BST *lp);
+BST *minValueT(BST *root);
 
-BST *removeT(BST *lp, char *key);
+//remove any element
+BST *removeT(BST *root, char *key);
+
+//write on text file
+void WriteFileT(BST *root, FILE *f);
 
 #endif	/* included */
 

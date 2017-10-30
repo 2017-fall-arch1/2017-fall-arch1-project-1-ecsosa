@@ -1,5 +1,6 @@
 
 
+
 #include <stdio.h>		/* for printf */
 #include <stdlib.h>		/* for free() */
 #include <string.h> 		/* for strlen */
@@ -31,19 +32,20 @@ int main()
   while (gets_n(buf, 100))/* build list */
     insertT(root, buf);
 
+  printf("writing them in a file");
   WriteFileT(root, f);
-  
-  printT(root); //Print list
 
+  printf("Printing inserted names");
+  printT(root); //Print list
 
   printf("I wish to remove...");
   char temp[100];
-  fgets(temp,100,stdin);
-
-    removeT(root, temp);
-
-    printT(root);
-
-
+  fgets(temp,100,stdin);//getting element wished to remove
+  removeT(root, temp);
+  printT(root);//printing elements after removed
+  
   return 0;
 }
+
+
+    
